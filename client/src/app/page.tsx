@@ -3,18 +3,18 @@
 import React, { useState, useRef, useEffect } from "react";
 import { API_URL } from "../lib/config";
 import {
-  ArrowUpIcon,
-  SparklesIcon,
-  GlobeIcon,
-  ExternalLinkIcon,
-  LoaderIcon,
-  RefreshIcon,
-  LightbulbIcon,
-} from "../components/icons";
+  ArrowUp,
+  Sparkles,
+  Globe,
+  ExternalLink,
+  Loader2,
+  RotateCw,
+  Lightbulb,
+} from "lucide-react";
 
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/src/components/ui/button";
+import { Textarea } from "@/src/components/ui/textarea";
+import { Card, CardContent } from "@/src/components/ui/card";
 
 type SearchResponse = {
   answer: string;
@@ -23,20 +23,20 @@ type SearchResponse = {
 
 type ChatMessage =
   | {
-      id: string;
-      role: "user";
-      content: string;
-      timestamp: Date;
-    }
+    id: string;
+    role: "user";
+    content: string;
+    timestamp: Date;
+  }
   | {
-      id: string;
-      role: "assistant";
-      content: string;
-      sources: string[];
-      timestamp: Date;
-      isLoading?: boolean;
-      error?: string;
-    };
+    id: string;
+    role: "assistant";
+    content: string;
+    sources: string[];
+    timestamp: Date;
+    isLoading?: boolean;
+    error?: string;
+  };
 
 const SUGGESTIONS = [
   "What is quantum computing and how does it work?",
@@ -112,11 +112,11 @@ export default function Home() {
         prev.map((msg) =>
           msg.id === assistantMsgId
             ? {
-                ...msg,
-                content: data.answer,
-                sources: data.sources || [],
-                isLoading: false,
-              }
+              ...msg,
+              content: data.answer,
+              sources: data.sources || [],
+              isLoading: false,
+            }
             : msg
         )
       );
@@ -125,10 +125,10 @@ export default function Home() {
         prev.map((msg) =>
           msg.id === assistantMsgId
             ? {
-                ...msg,
-                error: err.message || "Failed to retrieve search results. Make sure backend is running.",
-                isLoading: false,
-              }
+              ...msg,
+              error: err.message || "Failed to retrieve search results. Make sure backend is running.",
+              isLoading: false,
+            }
             : msg
         )
       );
@@ -156,7 +156,7 @@ export default function Home() {
       <header className="px-6 h-16 border-b border-zinc-200/80 dark:border-zinc-800/80 flex items-center justify-between backdrop-blur-md bg-white/70 dark:bg-[#0b0b0c]/70 sticky top-0 z-10">
         <div className="flex items-center gap-2">
           <div className="p-1.5 rounded-lg bg-indigo-500 text-white dark:bg-indigo-600">
-            <SparklesIcon size={18} />
+            <Sparkles size={18} />
           </div>
           <span className="font-semibold text-lg tracking-tight bg-gradient-to-r from-zinc-900 to-zinc-600 dark:from-white dark:to-zinc-400 bg-clip-text text-transparent">
             Agent Search
@@ -169,7 +169,7 @@ export default function Home() {
             size="sm"
             className="flex items-center gap-1.5 text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100 font-medium"
           >
-            <RefreshIcon size={14} />
+            <RotateCw size={14} />
             Reset Chat
           </Button>
         )}
@@ -218,7 +218,7 @@ export default function Home() {
                     disabled={input.trim().length < 5 || isLoading}
                     className="bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 hover:bg-zinc-800 dark:hover:bg-zinc-200 cursor-pointer disabled:opacity-30"
                   >
-                    <ArrowUpIcon size={14} />
+                    <ArrowUp size={14} />
                   </Button>
                 </div>
               </Card>
@@ -226,7 +226,7 @@ export default function Home() {
 
             <div className="space-y-3">
               <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-400 dark:text-zinc-500 uppercase tracking-wider pl-1">
-                <LightbulbIcon size={14} />
+                <Lightbulb size={14} />
                 Suggested searches
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -262,9 +262,9 @@ export default function Home() {
 
                 return (
                   <div key={message.id} className="space-y-4">
-  <div className="flex items-center gap-2 pl-0.5">
+                    <div className="flex items-center gap-2 pl-0.5">
                       <div className="p-1 rounded bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400">
-                        <SparklesIcon size={15} />
+                        <Sparkles size={15} />
                       </div>
                       <span className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
                         Agent Response
@@ -274,7 +274,7 @@ export default function Home() {
                     {((message.sources && message.sources.length > 0) || message.isLoading) && (
                       <div className="space-y-2 pl-7">
                         <div className="flex items-center gap-1.5 text-xs text-zinc-400 dark:text-zinc-500 font-medium">
-                          <GlobeIcon size={12} />
+                          <Globe size={12} />
                           Sources found
                         </div>
                         {message.isLoading ? (
@@ -308,7 +308,7 @@ export default function Home() {
                                         {getDomainName(src)}
                                       </span>
                                     </div>
-                                    <ExternalLinkIcon
+                                    <ExternalLink
                                       size={11}
                                       className="text-zinc-400 dark:text-zinc-500 group-hover:text-indigo-500 flex-shrink-0"
                                     />
@@ -374,9 +374,9 @@ export default function Home() {
                       className="bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-950 hover:bg-zinc-800 dark:hover:bg-zinc-200 cursor-pointer"
                     >
                       {isLoading ? (
-                        <LoaderIcon size={14} className="animate-spin" />
+                        <Loader2 size={14} className="animate-spin" />
                       ) : (
-                        <ArrowUpIcon size={14} />
+                        <ArrowUp size={14} />
                       )}
                     </Button>
                   </div>
